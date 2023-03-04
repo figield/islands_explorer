@@ -2,9 +2,9 @@ import os
 import unittest
 from unittest import skip
 
-from islands_discovery import islands_discovery
-from tests.arbitrary.islands_discovery_arbitrary_solution_1 import Graph
+from arbitrary.islands_discovery_with_graph import Graph
 from utils.input_data_parser import read_matrix_from_file
+from utils.islands_discovery import islands_discovery
 from utils.streams import stream_data_from_array2d, stream_data_from_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -100,12 +100,7 @@ class TestIslandsDiscoveryFromMatrix(unittest.TestCase, CommonTestsForIslandsDis
 
 class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, CommonTestsForIslandsDiscovery):
     """
-    Notes:
-        Arbitrary solution base on Graph (by Shivam Shrey) cannot handle matrix filled
-        with one island of size 25x40, 10x120 or bigger. Test is failing for maps no. 12 and 14.
-
-        In addition to the disadvantages, this test scenario serves as a validation of the test data
-        and the tests themselves.
+        This test scenario serves as a validation of the test data and the tests themselves.
     """
 
     def _test_islands_discovery(self, test_data_file, expected_result):
@@ -122,6 +117,9 @@ class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, CommonTestsForI
     @skip
     def test_map_with_one_big_island_covering_whole_map(self):
         """
-         Error: `RecursionError: maximum recursion depth exceeded in comparison.`
+        Arbitrary solution base on Graph (by Shivam Shrey) cannot handle matrix filled
+        with e.x. one island of size 25x40, 10x120 or bigger. Test is failing for maps no. 12 and 14.
+
+        Error: `RecursionError: maximum recursion depth exceeded in comparison.`
         """
         pass

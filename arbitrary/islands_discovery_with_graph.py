@@ -1,11 +1,10 @@
-
 # source: https://www.geeksforgeeks.org/find-the-number-of-islands-using-dfs/
-# This solution is used as an arbitrary solution to check if the new one is giving the same result.
+# This solution is used as an arbitrary solution to see if mine gives the same result.
 
 class Graph:
-    '''
-        This code is contributed by Shivam Shrey
-    '''
+    """
+    This code is contributed by Shivam Shrey
+    """
 
     def __init__(self, row, col, graph):
         self.ROW = row
@@ -51,21 +50,3 @@ class Graph:
                     count += 1
 
         return count
-
-if __name__ == "__main__":
-
-    graph = [
-        [1, 1, 0, 0, 0],
-        [0, 1, 0, 0, 1],
-        [1, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0],
-        [1, 0, 1, 0, 1]
-    ]
-
-    row = len(graph)
-    col = len(graph[0])
-
-    g = Graph(row, col, graph)
-
-    print("Number of islands is:", g.countIslands())
-

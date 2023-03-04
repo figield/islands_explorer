@@ -3,9 +3,12 @@ Explorer of unknown islands
 
 
 TODO:
-- [x] add script ./your_script.sh <path_to_the_file>
+- [x] create solution
+- [x] add tests
+- [x] add script `./run.sh <path_to_the_file>`
 - [x] add arbitrary solution
-- [ ] docker file
+- [ ] profiling
 - [ ] more tests
 - [ ] refactoring 
 - [ ] description
+- [ ] docker file

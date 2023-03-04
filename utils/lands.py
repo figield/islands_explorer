@@ -1,9 +1,5 @@
 def get_first_neighbor_name(row: int, column: int, positions: dict) -> str:
     """
-    :param row:
-    :param column:
-    :param positions:
-    :return: string
 
     2 3 4
     1-?
@@ -33,11 +29,8 @@ def get_first_neighbor_name(row: int, column: int, positions: dict) -> str:
 def raname_neighbour_land(position: tuple, positions: dict, lands: dict, land_name: str) -> None:
     """
 
-    :param position:
-    :param positions:
-    :param lands:
-    :param land_name:
-    :return:
+    2 3 4        1 3 4
+    1-1     ->   1-1
     """
     neighbour_name = positions.get(position)
     if neighbour_name is not None and neighbour_name != land_name:
@@ -50,11 +43,6 @@ def raname_neighbour_land(position: tuple, positions: dict, lands: dict, land_na
 
 def connect_neighbours(row: int, column: int, positions: dict, lands: dict) -> None:
     """
-    :param row:
-    :param column:
-    :param positions:
-    :param lands:
-    :return: None
 
     2 3 4        1 1 1
     1-1     ->   1-1
@@ -75,11 +63,7 @@ def connect_neighbours(row: int, column: int, positions: dict, lands: dict) -> N
 
 def discover_land(row: int, column: int, positions: dict, lands: dict) -> None:
     """
-    :param row:
-    :param column:
-    :param positions:
-    :param lands:
-    :return:
+
     """
     land_name = get_first_neighbor_name(row, column, positions)
     if not land_name:
@@ -92,18 +76,10 @@ def discover_land(row: int, column: int, positions: dict, lands: dict) -> None:
 
 def forget_lands_beyond_the_horizon(row_len: int, row: int, column: int, positions: dict, lands: dict) -> None:
     """
-    :param row_len:
-    :param row:
-    :param column:
-    :param positions:
-    :param lands:
-    :return: None
-
         xxxxxxxxx <- previous lands data is not needed
         xxxxx0100 <- also some positions in the upper row are not needed
         111000100
               ^- we are here
-
     """
     forgotten_lands = 0
     # delete row 2 lewel upper

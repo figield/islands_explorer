@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 islands_discovery.py $1 $2 $3
+python3 main.py $1 $2 $3

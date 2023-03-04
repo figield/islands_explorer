@@ -4,8 +4,6 @@ from utils.input_data_parser import read_matrix_from_file
 def stream_data_from_file(file_name: str):
     """
     Stream data from file_path, character by character.
-    :param file_name:
-    :return:
     """
     with open(file_name, 'r') as file:
         while True:
@@ -19,9 +17,6 @@ def stream_data_from_file(file_name: str):
 def stream_data_from_array2d(file_name: str):
     """
     Load data from the file_path to the matrix and then stream it, item by iteam.
-
-    :param file_name:
-    :return:
     """
     array2d = read_matrix_from_file(file_name)
     for row in array2d:
