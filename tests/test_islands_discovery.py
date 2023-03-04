@@ -1,6 +1,6 @@
 import os
 import unittest
-from abc import ABC, abstractmethod
+from unittest import skip
 
 from islands_discovery import islands_discovery
 from tests.arbitrary.islands_discovery_arbitrary_solution_1 import Graph
@@ -11,9 +11,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "test_data")
 
 
-class TestIslandsDiscovery(ABC):
+class CommonTestsForIslandsDiscovery:
 
-    @abstractmethod
+    def __init__(self, *args, **kwargs):
+        super(CommonTestsForIslandsDiscovery, self).__init__(*args, **kwargs)
+        if self.__class__ == CommonTestsForIslandsDiscovery:
+            self.run = lambda self, *args, **kwargs: None
+
     def _test_islands_discovery(self, test_data_file, expected_result):
         pass
 
@@ -72,7 +76,7 @@ class TestIslandsDiscovery(ABC):
         self._test_islands_discovery(f'{DATA_PATH}/map9.txt', expected_result=5)
 
 
-class TestIslandsDiscoveryFromFile(unittest.TestCase, TestIslandsDiscovery):
+class TestIslandsDiscoveryFromFile(unittest.TestCase, CommonTestsForIslandsDiscovery):
 
     def _get_data_streamer(self):
         return stream_data_from_file
@@ -83,7 +87,7 @@ class TestIslandsDiscoveryFromFile(unittest.TestCase, TestIslandsDiscovery):
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
 
-class TestIslandsDiscoveryFromMatrix(unittest.TestCase, TestIslandsDiscovery):
+class TestIslandsDiscoveryFromMatrix(unittest.TestCase, CommonTestsForIslandsDiscovery):
 
     def _get_data_streamer(self):
         return stream_data_from_array2d
@@ -94,7 +98,7 @@ class TestIslandsDiscoveryFromMatrix(unittest.TestCase, TestIslandsDiscovery):
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
 
-class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, TestIslandsDiscovery):
+class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, CommonTestsForIslandsDiscovery):
     """
     Notes:
         Arbitrary solution base on Graph (by Shivam Shrey) cannot handle matrix filled
@@ -115,6 +119,7 @@ class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, TestIslandsDisc
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
+    @skip
     def test_map_with_one_big_island_covering_whole_map(self):
         """
          Error: `RecursionError: maximum recursion depth exceeded in comparison.`
