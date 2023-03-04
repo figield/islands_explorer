@@ -1,15 +1,4 @@
-def read_matrix_from_file(file_name):
-    matrix2d = []
-    with open(file_name, 'r') as file:
-        for line in file.readlines():
-            row = []
-            for data in line:
-                if data == "\n":
-                    break
-                row.append(int(data))
-            if row:
-                matrix2d.append(row)
-    return matrix2d
+from utils.input_data_parser import read_matrix_from_file
 
 
 def stream_data_from_file(file_name: str):

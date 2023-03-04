@@ -1,12 +1,13 @@
 import sys
 
+from utils.input_data_parser import get_input_arguments
 from utils.lands import connect_neighbours, discover_land, forget_the_land_beyond_the_horizon, is_land
 from utils.streams import stream_data_from_array2d, stream_data_from_file
 
 DEBUG = False
 
 
-def main(file_name: str, data_streamer=stream_data_from_file) -> int:
+def islands_discovery(file_name: str, data_streamer=stream_data_from_file) -> int:
     """
 
     :param data_streamer:
@@ -44,29 +45,23 @@ def main(file_name: str, data_streamer=stream_data_from_file) -> int:
     return len(lands) + forgotten_lands
 
 
-if __name__ == "__main__":
+def main():
     from timeit import default_timer as timer
 
-    file_path = "tests/test_data/map.txt"
-    if len(sys.argv) > 1:
-        file_path = sys.argv[1]
-    method = "stream"
-    DEBUG = False
-    if len(sys.argv) > 2:
-        if "stream" in sys.argv:
-            method = "stream"
-        elif "matrix" in sys.argv:
-            method = "matrix"
-        if "--debug" in sys.argv:
-            DEBUG = True
+    file_path, method, debug = get_input_arguments()
 
     start = timer()
     if method == "stream":
-        reuslt = main(file_path)
+        result = islands_discovery(file_path)
     else:
-        reuslt = main(file_path, stream_data_from_array2d)
+        result = islands_discovery(file_path, stream_data_from_array2d)
     end = timer()
-    elapsed = end - start
+
     if DEBUG:
+        elapsed = end - start
         sys.stderr.write(f"Finished in {elapsed} seconds, method: {method}, file: {file_path}\n")
-    sys.stdout.write(str(reuslt))
+    sys.stdout.write(str(result))
+
+
+if __name__ == "__main__":
+    main()

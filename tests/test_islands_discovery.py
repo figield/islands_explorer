@@ -2,9 +2,10 @@ import os
 import unittest
 from abc import ABC, abstractmethod
 
-from islands_discovery import main
+from islands_discovery import islands_discovery
 from tests.arbitrary.islands_discovery_arbitrary_solution_1 import Graph
-from utils.streams import read_matrix_from_file, stream_data_from_array2d, stream_data_from_file
+from utils.input_data_parser import read_matrix_from_file
+from utils.streams import stream_data_from_array2d, stream_data_from_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "test_data")
@@ -38,11 +39,11 @@ class TestIslandsDiscovery(ABC):
         """
         self._test_islands_discovery(f'{DATA_PATH}/map8.txt', expected_result=0)
 
-    # def test_milion_islands_sauce(self):
-    #     """
-    #     Testing very large map
-    #     """
-    #     self._test_islands_discovery(f'{DATA_PATH}/map_milion.txt', expected_result=516096)
+    def test_milion_islands_sauce(self):
+        """
+        Testing very large map
+        """
+        self._test_islands_discovery(f'{DATA_PATH}/map_milion.txt', expected_result=516096)
 
     def test_map_with_one_island(self):
         """
@@ -77,7 +78,7 @@ class TestIslandsDiscoveryFromFile(unittest.TestCase, TestIslandsDiscovery):
         return stream_data_from_file
 
     def _test_islands_discovery(self, test_data_file, expected_result):
-        actual_result = main(test_data_file, self._get_data_streamer())
+        actual_result = islands_discovery(test_data_file, self._get_data_streamer())
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
@@ -88,7 +89,7 @@ class TestIslandsDiscoveryFromMatrix(unittest.TestCase, TestIslandsDiscovery):
         return stream_data_from_array2d
 
     def _test_islands_discovery(self, test_data_file, expected_result):
-        actual_result = main(test_data_file, self._get_data_streamer())
+        actual_result = islands_discovery(test_data_file, self._get_data_streamer())
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
