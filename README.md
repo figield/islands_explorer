@@ -3,12 +3,12 @@ Explorer of unknown islands
 
 
 TODO:
-- [x] create solution
+- [x] invent an alorithm
 - [x] add tests
 - [x] add script `./run.sh <path_to_the_file>`
 - [x] add arbitrary solution
-- [ ] profiling
+- [x] profiling
 - [ ] more tests
 - [ ] refactoring 
-- [ ] description
+- [ ] descriptions
 - [ ] docker file

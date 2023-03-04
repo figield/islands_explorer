@@ -28,9 +28,9 @@ def islands_discovery(file_path: str, data_streamer=stream_data_from_file) -> in
             connect_neighbours(row, column, positions, lands)
 
         # for memory optimalization
-        # if row_to_clean + 2 == row:
-        #     forgotten_lands += forget_lands_beyond_the_horizon(row_len, row, column, positions, lands)
-        #     row_to_clean += 1
+        if row_to_clean + 2 == row:
+            forgotten_lands += forget_lands_beyond_the_horizon(row_len, row, column, positions, lands)
+            row_to_clean += 1
 
         column += 1
 
