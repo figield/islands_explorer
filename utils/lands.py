@@ -1,26 +1,4 @@
-def is_land(p: any) -> bool:
-    """
-
-    :param p:
-    :return:
-    """
-
-    land_mark = "1"
-
-    return p == land_mark or p == int(land_mark)
-
-
-def create_land_name(row: int, column: int) -> str:
-    """
-
-    :param row:
-    :param column:
-    :return:
-    """
-    return f"{row}-{column}"
-
-
-def get_neighbor_name(row: int, column: int, positions: dict) -> str:
+def get_first_neighbor_name(row: int, column: int, positions: dict) -> str:
     """
     :param row:
     :param column:
@@ -103,9 +81,9 @@ def discover_land(row: int, column: int, positions: dict, lands: dict) -> None:
     :param lands:
     :return:
     """
-    land_name = get_neighbor_name(row, column, positions)
+    land_name = get_first_neighbor_name(row, column, positions)
     if not land_name:
-        land_name = create_land_name(row, column)
+        land_name = f"{row}-{column}"
     positions[(row, column)] = land_name
     recorded_positions = lands.get(land_name, [])
     recorded_positions.append((row, column))

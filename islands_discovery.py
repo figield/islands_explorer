@@ -1,17 +1,17 @@
 import sys
 
 from utils.input_data_parser import get_input_arguments
-from utils.lands import connect_neighbours, discover_land, forget_lands_beyond_the_horizon, is_land
+from utils.lands import connect_neighbours, discover_land, forget_lands_beyond_the_horizon
 from utils.streams import stream_data_from_array2d, stream_data_from_file
 
 DEBUG = False
 
 
-def islands_discovery(file_name: str, data_streamer=stream_data_from_file) -> int:
+def islands_discovery(file_path: str, data_streamer=stream_data_from_file) -> int:
     """
 
     :param data_streamer:
-    :param file_name:
+    :param file_path:
     :return:
     """
     positions = {}
@@ -21,14 +21,14 @@ def islands_discovery(file_name: str, data_streamer=stream_data_from_file) -> in
     row = 0
     row_to_clean = 0
     column = 0
-    for position in data_streamer(file_name):
+    for position in data_streamer(file_path):
         if position == "\n":
             row_len = column
             row += 1
             column = 0
             continue
 
-        if is_land(position):
+        if int(position) == 1:
             discover_land(row, column, positions, lands)
             connect_neighbours(row, column, positions, lands)
 
@@ -48,7 +48,7 @@ def islands_discovery(file_name: str, data_streamer=stream_data_from_file) -> in
 def main():
     from timeit import default_timer as timer
 
-    file_path, method, debug = get_input_arguments()
+    file_path, method, DEBUG = get_input_arguments()
 
     start = timer()
     if method == "stream":
