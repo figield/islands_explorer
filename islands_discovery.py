@@ -1,7 +1,7 @@
 import sys
 
 from utils.input_data_parser import get_input_arguments
-from utils.lands import connect_neighbours, discover_land, forget_the_land_beyond_the_horizon, is_land
+from utils.lands import connect_neighbours, discover_land, forget_lands_beyond_the_horizon, is_land
 from utils.streams import stream_data_from_array2d, stream_data_from_file
 
 DEBUG = False
@@ -34,7 +34,7 @@ def islands_discovery(file_name: str, data_streamer=stream_data_from_file) -> in
 
         # for memory optimalization
         if row_to_clean + 2 == row:
-            forgotten_lands += forget_the_land_beyond_the_horizon(row_len, row, column, positions, lands)
+            forgotten_lands += forget_lands_beyond_the_horizon(row_len, row, column, positions, lands)
             row_to_clean += 1
 
         column += 1

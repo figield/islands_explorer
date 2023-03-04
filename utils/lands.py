@@ -112,7 +112,7 @@ def discover_land(row: int, column: int, positions: dict, lands: dict) -> None:
     lands[land_name] = recorded_positions
 
 
-def forget_the_land_beyond_the_horizon(row_len: int, row: int, column: int, positions: dict, lands: dict) -> None:
+def forget_lands_beyond_the_horizon(row_len: int, row: int, column: int, positions: dict, lands: dict) -> None:
     """
     :param row_len:
     :param row:
