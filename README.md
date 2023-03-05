@@ -43,13 +43,17 @@ More precisely, without removing unnecessary elements for further processing of 
 ![Mprof for milion from_graph](profiling/mprof_for_milion_from_graph.png)
 
 
-## Conclusions
+## Summary
 
-The results are quite surprising.
+I spent about 4 hours coming up with this algorithm.
+It took me much longer to write tests (TDD of course!), refactor the code and play around with memory profiling.
+I'm being a bit too scientific in my approach, but I hope you like my solution.
+
+And the results are quite surprising.
 
 1. The algorithm I implemented runs comparably fast as graph-based solutions, and uses much less memory.
 I achived this by processing data in the fly, when streaming it from the file.
-Graph based algorithms need to have the whole map loaded into the memory, which is a disadvantage where it comes to handling huge data or specific ones (like `one big islang`).
+Graph based algorithms need to have the whole map loaded into the memory, which is a disadvantage where it comes to handling huge data or specific ones (like `one big island`).
 
 2. The recursion-based algorithm fails when encountering cases leading to a "RecursionError".
 
@@ -63,11 +67,6 @@ For example, a graph-based solution cannot cope with a filled matrix, i.e. with 
 3. At the last one, but not least. I have refactored the code to be more object oriented.
 That has caused small drop in efficiency, but the code is easy to read and understood.
 
-
-## Summary
-
-I spent about 4 hours coming up with this algorithm. It took me much longer to write tests (some times is was TDD), refactor the code and play around with memory profiling.
-I'm being a bit too scientific in my approach, but I hope I met the requirements for the assignment and you like my solution.
 
 ### What's left for improvement
 
