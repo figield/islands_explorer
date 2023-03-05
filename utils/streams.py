@@ -7,16 +7,16 @@ def stream_data_from_file(file_name: str):
     """
     with open(file_name, 'r') as file:
         while True:
-            # Get one by one since the file_path might be very big (in both dimensions)
+            # Get one by one since the file might be very big.
             data = file.read(1)
             if not data:
                 break
             yield data
 
 
-def stream_data_from_array2d(file_name: str):
+def stream_data_from_matrix(file_name: str):
     """
-    Load data from the file_path to the matrix and then stream it, item by iteam.
+    Load data from the file to the matrix and then stream it, item by iteam.
     """
     array2d = read_matrix_from_file(file_name)
     for row in array2d:

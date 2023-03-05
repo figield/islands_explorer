@@ -1,8 +1,8 @@
 import sys
 
+from utils.explorer import Explorer
 from utils.input_data_parser import get_input_arguments
-from utils.islands_discovery import islands_discovery
-from utils.streams import stream_data_from_array2d
+from utils.streams import stream_data_from_file, stream_data_from_matrix
 
 
 def main():
@@ -12,9 +12,11 @@ def main():
 
     start = timer()
     if method == "stream":
-        result = islands_discovery(file_path)
+        explorer = Explorer(file_path, stream_data_from_file)
+        result = explorer.count_islands()
     else:
-        result = islands_discovery(file_path, stream_data_from_array2d)
+        explorer = Explorer(file_path, stream_data_from_matrix)
+        result = explorer.count_islands()
     end = timer()
 
     if DEBUG:

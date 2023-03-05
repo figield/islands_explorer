@@ -3,9 +3,9 @@ import unittest
 from unittest import skip
 
 from arbitrary.islands_discovery_with_graph import Graph
+from utils.explorer import Explorer
 from utils.input_data_parser import read_matrix_from_file
-from utils.islands_discovery import islands_discovery
-from utils.streams import stream_data_from_array2d, stream_data_from_file
+from utils.streams import stream_data_from_matrix, stream_data_from_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "test_data")
@@ -30,6 +30,7 @@ class CommonTestsForIslandsDiscovery:
         self._test_islands_discovery(f'{DATA_PATH}/map5.txt', expected_result=5)
         self._test_islands_discovery(f'{DATA_PATH}/map6.txt', expected_result=5)
         self._test_islands_discovery(f'{DATA_PATH}/map13.txt', expected_result=5)
+        self._test_islands_discovery(f'{DATA_PATH}/map15.txt', expected_result=2)
 
     def test_empty_map(self):
         """
@@ -78,39 +79,33 @@ class CommonTestsForIslandsDiscovery:
 
 class TestIslandsDiscoveryFromFile(unittest.TestCase, CommonTestsForIslandsDiscovery):
 
-    def _get_data_streamer(self):
-        return stream_data_from_file
-
     def _test_islands_discovery(self, test_data_file, expected_result):
-        actual_result = islands_discovery(test_data_file, self._get_data_streamer())
+        explorer = Explorer(test_data_file, stream_data_from_file)
+        actual_result = explorer.count_islands()
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
 
 class TestIslandsDiscoveryFromMatrix(unittest.TestCase, CommonTestsForIslandsDiscovery):
 
-    def _get_data_streamer(self):
-        return stream_data_from_array2d
-
     def _test_islands_discovery(self, test_data_file, expected_result):
-        actual_result = islands_discovery(test_data_file, self._get_data_streamer())
+        explorer = Explorer(test_data_file, stream_data_from_matrix)
+        actual_result = explorer.count_islands()
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
 
 class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase, CommonTestsForIslandsDiscovery):
     """
-        This test scenario serves as a validation of the test data and the tests themselves.
+    This test scenario serves as a validation of the test data and the tests themselves.
     """
 
     def _test_islands_discovery(self, test_data_file, expected_result):
         array2d = read_matrix_from_file(test_data_file)
         if not array2d:
             array2d = [[]]
-        row = len(array2d)
-        col = len(array2d[0])
-        g = Graph(row, col, array2d)
-        actual_result = g.countIslands()
+        graph = Graph(len(array2d), len(array2d[0]), array2d)
+        actual_result = graph.countIslands()
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands, file: {test_data_file}")
 
