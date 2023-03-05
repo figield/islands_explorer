@@ -18,9 +18,13 @@ class Explorer:
     def create_current_land_name(self):
         return f"{self.row}-{self.column}"
 
-    def discover_land(self) -> None:
+    def explore_position(self) -> None:
         """
-
+        Explore the position require the following steps:
+        - if there are neighbours next to the current position, then the name is taken from the first neigbour.
+          The position with the same name as a neighbor becomes part of the adjacent land.
+        - if there is no neighbours, then name is based on coordinates, like `0-0`.
+        - information about the position and name of the land is saved in the appropriate dictionaries.
         """
         land_name = self.get_neighbor_name()
         current_position = (self.row, self.column)
@@ -41,11 +45,16 @@ class Explorer:
             1-?
 
         """
-
+        neighbour_name = ""
         for dr, dc in [(0, -1), (-1, -1), (-1, 0), (-1, 1)]:
-            neighbour_name = self.positions.get((self.row + dr, self.column + dc))
+            row = self.row + dr
+            column = self.column + dc
+            if row < 0 or column < 0:
+                continue
+            neighbour_name = self.positions.get((row, column))
             if neighbour_name:
                 return neighbour_name
+        return neighbour_name
 
     def count_lands_beyond_horizon(self, row_len):
         """
@@ -75,7 +84,7 @@ class Explorer:
         Considered neighbours to be connected are lands next to the explored position.
         First land is with the position behind the explorer. Next lands may start with the posistion
         above the explorer (2, 3, 4).
-        Neighbour lands are connected in the clockwise order. When lands are conneced then they have the same name.
+        When lands are conneced then they have the same name.
 
             2 3 4        1 1 1
             1-1     ->   1-1
@@ -90,7 +99,7 @@ class Explorer:
 
     def raname_land(self, position: tuple) -> None:
         """
-
+        Neighbour lands are connected in the clockwise order.
         2 3 4        1 3 4
         1-1     ->   1-1
         """
@@ -105,6 +114,14 @@ class Explorer:
 
     def count_islands(self) -> int:
         """
+        This method is the entry point for the whole algorithm.
+        The explorer, moving from left to right, explores only neighboring positions and connects neighbors around.
+
+        Counting islands require the following steps:
+        1. Explore the position
+        2. Connecting neighbors
+        3. Counting islands beyond the horizon (optional step for memory efficiency).
+        4. Islands stored in the `lands` dictionary must be counted and added to the `lands_beyond_horizon` from step 3.
         """
         row_len = 0
         lands_beyond_horizon = 0
@@ -117,7 +134,7 @@ class Explorer:
                 continue
 
             if int(data) == 1:
-                self.discover_land()
+                self.explore_position()
                 self.connect_neighbours()
 
             # for memory optimalization
