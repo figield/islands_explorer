@@ -1,12 +1,15 @@
+from typing import Callable
+
+
 class Explorer:
 
-    def __init__(self, file_path: str, data_streamer):
-        self.positions = {}
-        self.lands = {}
-        self.row = 0
-        self.column = 0
-        self.file_path = file_path
-        self.data_streamer = data_streamer
+    def __init__(self, file_path: str, data_streamer: Callable):
+        self.positions: dict = {}
+        self.lands: dict = {}
+        self.row: int = 0
+        self.column: int = 0
+        self.file_path: str = file_path
+        self.data_streamer: Callable = data_streamer
 
     def go_to_next_row(self):
         self.row += 1
@@ -15,7 +18,7 @@ class Explorer:
     def move_forward(self):
         self.column += 1
 
-    def create_current_land_name(self):
+    def create_current_land_name(self) -> str:
         return f"{self.row}-{self.column}"
 
     def explore_position(self) -> None:
@@ -56,7 +59,7 @@ class Explorer:
                 return neighbour_name
         return neighbour_name
 
-    def count_lands_beyond_horizon(self, row_len):
+    def count_lands_beyond_horizon(self, row_len: int) -> int:
         """
         Count islands beyond the horizon. Delete those wich are already counted.
 
