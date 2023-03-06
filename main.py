@@ -21,7 +21,8 @@ def main():
 
     if DEBUG:
         elapsed = end - start
-        sys.stderr.write(f"Finished in {elapsed} seconds, method: {method}, file: {file_path}\n")
+        sys.stderr.write(f"Finished in {elapsed} seconds,"
+                         f" method: {method}, file: {file_path}\n")
     sys.stdout.write(str(result))
 
 

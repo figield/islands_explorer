@@ -24,10 +24,14 @@ class Explorer:
     def explore_position(self) -> None:
         """
         Explore the position require the following steps:
-        - if there are neighbours next to the current position, then the name is taken from the first neigbour.
-          The position with the same name as a neighbor becomes part of the adjacent land.
-        - if there is no neighbours, then name is based on coordinates, like `0-0`.
-        - information about the position and name of the land is saved in the appropriate dictionaries.
+        - if there are neighbours next to the current position,
+          then the name is taken from the first neigbour.
+          The position with the same name as a neighbor becomes
+          part of the adjacent land.
+        - if there is no neighbours, then name is based on coordinates,
+          like `0-0`.
+        - information about the position and name of the land is saved
+          in the appropriate dictionaries.
         """
         land_name = self.get_neighbor_name()
         current_position = (self.row, self.column)
@@ -41,7 +45,8 @@ class Explorer:
     def get_neighbor_name(self) -> str:
         """
         Get the first existing neighbor's name in clockwise order.
-        In the diagram below, the name will be taken from neighbour with number 1.
+        In the diagram below, the name will be taken from neighbour
+        with number 1.
         Then from neighbours with number 2, 3 and 4.
 
             2 3 4
@@ -61,14 +66,16 @@ class Explorer:
 
     def count_lands_beyond_horizon(self, row_len: int) -> int:
         """
-        Count islands beyond the horizon. Delete those wich are already counted.
+        Count islands beyond the horizon.
+        Delete those which are already counted.
 
             xxxxxxxxx <- previous lands data is not needed
+            --------- <- horizon
             101100100
             111000100
                   ^- current position
         """
-        forgotten_lands = 0
+        lands_beyond_horizon = 0
         for i in range(row_len):
             position = (self.row - 2, self.column + i)
             land_name = self.positions.get(position)
@@ -77,23 +84,25 @@ class Explorer:
                 land_positions.pop(land_positions.index(position))
                 if not land_positions:
                     del self.lands[land_name]
-                    forgotten_lands += 1
+                    lands_beyond_horizon += 1
                 del self.positions[position]
 
-        return forgotten_lands
+        return lands_beyond_horizon
 
     def connect_neighbours(self) -> None:
         """
-        Considered neighbours to be connected are lands next to the explored position.
-        First land is with the position behind the explorer. Next lands may start with the posistion
-        above the explorer (2, 3, 4).
+        Considered neighbours to be connected are lands next
+        to the explored position.
+        First land is with the position behind the explorer.
+        Next lands may start with the posistion above the explorer (2, 3, 4).
         When lands are conneced then they have the same name.
 
             2 3 4        1 1 1
             1-1     ->   1-1
 
         Note:
-            Renaming the first neighbour can be skipped because the current name is derived from it.
+            Renaming the first neighbour can be skipped because
+            the current name is derived from it.
         """
 
         for dr, dc in [(-1, -1), (-1, 0), (-1, 1)]:
@@ -118,13 +127,16 @@ class Explorer:
     def count_islands(self) -> int:
         """
         This method is the entry point for the whole algorithm.
-        The explorer, moving from left to right, explores only neighboring positions and connects neighbors around.
+        The explorer, moving from left to right, explores only neighboring
+        positions and connects neighbors around.
 
         Counting islands require the following steps:
         1. Explore the position
         2. Connecting neighbors
-        3. Counting islands beyond the horizon (optional step for memory efficiency).
-        4. Islands stored in the `lands` dictionary must be counted and added to the `lands_beyond_horizon` from step 3.
+        3. Counting islands beyond the horizon (optional step for memory
+           efficiency).
+        4. Islands stored in the `lands` dictionary must be counted and added
+           to the `lands_beyond_horizon` from step 3.
         """
         row_len = 0
         lands_beyond_horizon = 0
@@ -142,7 +154,8 @@ class Explorer:
 
             # for memory optimalization
             if row_to_clean + 2 == self.row:
-                lands_beyond_horizon += self.count_lands_beyond_horizon(row_len)
+                lands_beyond_horizon += \
+                    self.count_lands_beyond_horizon(row_len)
                 row_to_clean += 1
 
             self.move_forward()
