@@ -14,7 +14,18 @@ $ ./run.sh
 Provide path to the file with the map
 ```
 
-2. By running Makefile comands:
+2. In the docker container:
+
+- build docker image (run only once)
+```commandline
+docker build -t explorer .
+```
+- run commands with the prefix: `docker run --rm -it explorer`
+```commandline
+docker run --rm -it explorer python3 main.py tests/test_data/map_milion.txt
+```
+
+3. By running Makefile comands (local):
 
 - `make` is running tests
 ```commandline
@@ -36,17 +47,19 @@ Finished in 8.146579368971288 seconds, method: stream, file: tests/test_data/map
 - `make matrix` - calls the `Explorer` algorithm, data is not streamed directly from the file, but first loaded into memory.
 - `make graph` - calls a reference agorithm on the basis of graphs - it is used to validate results obtained with `Explorer`.
 
-3. Directly with `python`:
+4. Directly with `python`:
 ```commandline
 python3 main.py tests/test_data/map_milion.txt
 ```
 
-4. Other examples:
+5. Other examples:
 ```commandline
 mprof run python3 main.py tests/test_data/map_milion.txt
 mprof run python3 main.py tests/test_data/map_milion.txt stream --debug
 mprof run python3 main.py tests/test_data/map_milion.txt matrix --debug
 mprof run python3 main_arbitrary_solution.py tests/test_data/map_milion.txt graph --debug
+docker run --rm -v .:/app -it explorer mprof run python3 main.py tests/test_data/map_milion.txt --debug
+docker run --rm -v .:/app -it explorer mprof plot -o image.png
 ```
 
 ## Solution description
@@ -198,7 +211,7 @@ For example, a graph-based solution cannot cope with a filled matrix, i.e. with 
 That has caused small drop in efficiency, but the code is easy to read and understood.
 
 
-### What's left for improvement
+### What's left to improve
 
 I cover the logic with tests based on different maps and a reference solution for a common set of tests.
 More unit tests would be good to add.
@@ -206,12 +219,11 @@ I was working in my virtual environment and the script has no external dependenc
 Only Python 3 is needed to run it.
 
 - [x] invent an algorithm
-- [x] add tests
+- [x] add tests (testing logic)
 - [x] add script `./run.sh <path_to_the_file>`
 - [x] add arbitrary solution
 - [x] profiling
 - [x] check coverage
 - [x] refactoring
 - [x] descriptions
-- [ ] more tests
-- [ ] docker file
+- [x] docker file
