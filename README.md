@@ -31,9 +31,9 @@ docker run --rm -it explorer python3 main.py tests/test_data/map_milion.txt
 ```commandline
 $ make
 python3 -m unittest tests/test_*.py
-..s.....................
+..............s.....................
 ----------------------------------------------------------------------
-Ran 24 tests in 22.676s
+Ran 36 tests in 22.863s
 
 OK (skipped=1)
 ```
@@ -214,16 +214,17 @@ That has caused small drop in efficiency, but the code is easy to read and under
 ### What's left to improve
 
 I cover the logic with tests based on different maps and a reference solution for a common set of tests.
-More unit tests would be good to add.
 I was working in my virtual environment and the script has no external dependencies.
-Only Python 3 is needed to run it.
+You only need Python 3 to run it, but if you don't have it, the dockerfile is ready.
 
 - [x] invent an algorithm
-- [x] add tests (testing logic)
+- [x] unit and `business` logic tests
 - [x] add script `./run.sh <path_to_the_file>`
 - [x] add arbitrary solution
 - [x] profiling
 - [x] check coverage
+- [x] run syntax analyzer
 - [x] refactoring
 - [x] descriptions
 - [x] docker file
+- [ ] make it public
