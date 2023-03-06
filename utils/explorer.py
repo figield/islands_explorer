@@ -33,7 +33,7 @@ class Explorer:
          - information about the position and name of the land is saved
            in the appropriate dictionaries.
         """
-        land_name = self.get_neighbor_name()
+        land_name = self.get_neighbour_name()
         current_position = (self.row, self.column)
         if not land_name:
             land_name = self.create_current_land_name()
@@ -42,9 +42,9 @@ class Explorer:
         recorded_positions.append(current_position)
         self.lands[land_name] = recorded_positions
 
-    def get_neighbor_name(self) -> str:
+    def get_neighbour_name(self) -> str:
         """
-         Get the first existing neighbor's name in clockwise order.
+         Get the first existing neighbour's name in clockwise order.
          In the diagram below, the name will be taken from neighbour
          with number 1.
          Then from neighbours with number 2, 3 and 4.
