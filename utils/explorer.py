@@ -1,27 +1,26 @@
-from typing import Callable
+from utils.streams import LandDataStreamer
 
 
 class Explorer:
 
-    def __init__(self, file_path: str, data_streamer: Callable):
+    def __init__(self, data_streamer: LandDataStreamer):
         self.positions: dict = {}
         self.lands: dict = {}
         self.row: int = 0
         self.column: int = 0
-        self.file_path: str = file_path
-        self.data_streamer: Callable = data_streamer
+        self.data_streamer: LandDataStreamer = data_streamer
 
-    def go_to_next_row(self):
+    def _go_to_next_row(self):
         self.row += 1
         self.column = 0
 
-    def move_forward(self):
+    def _move_forward(self):
         self.column += 1
 
-    def create_current_land_name(self) -> str:
+    def _create_current_land_name(self) -> str:
         return f"{self.row}-{self.column}"
 
-    def explore_position(self) -> None:
+    def _explore_position(self) -> None:
         """
          Explore the position require the following steps:
          - if there are neighbours next to the current position,
@@ -33,16 +32,16 @@ class Explorer:
          - information about the position and name of the land is saved
            in the appropriate dictionaries.
         """
-        land_name = self.get_neighbour_name()
+        land_name = self._get_neighbour_name()
         current_position = (self.row, self.column)
         if not land_name:
-            land_name = self.create_current_land_name()
+            land_name = self._create_current_land_name()
         self.positions[current_position] = land_name
         recorded_positions = self.lands.get(land_name, [])
         recorded_positions.append(current_position)
         self.lands[land_name] = recorded_positions
 
-    def get_neighbour_name(self) -> str:
+    def _get_neighbour_name(self) -> str:
         """
          Get the first existing neighbour's name in clockwise order.
          In the diagram below, the name will be taken from neighbour
@@ -64,7 +63,7 @@ class Explorer:
                 return neighbour_name
         return neighbour_name
 
-    def count_lands_beyond_horizon(self, row_len: int) -> int:
+    def _count_lands_beyond_horizon(self, row_len: int) -> int:
         """
          Count islands beyond the horizon.
          Delete those which are already counted.
@@ -89,7 +88,7 @@ class Explorer:
 
         return lands_beyond_horizon
 
-    def connect_neighbours(self) -> None:
+    def _connect_neighbours(self) -> None:
         """
          Considered neighbours to be connected are lands next
          to the explored position.
@@ -107,9 +106,9 @@ class Explorer:
 
         for dr, dc in [(-1, -1), (-1, 0), (-1, 1)]:
             neighbour_position = (self.row + dr, self.column + dc)
-            self.raname_land(neighbour_position)
+            self._raname_land(neighbour_position)
 
-    def raname_land(self, position: tuple) -> None:
+    def _raname_land(self, position: tuple) -> None:
         """
          Neighbour lands are connected in the clockwise order.
 
@@ -144,22 +143,22 @@ class Explorer:
         lands_beyond_horizon = 0
         row_to_clean = 0
 
-        for data in self.data_streamer(self.file_path):
-            if data == "\n":
+        for data in self.data_streamer.stream_data():
+            if data is None:
                 row_len = self.column
-                self.go_to_next_row()
+                self._go_to_next_row()
                 continue
 
-            if int(data) == 1:
-                self.explore_position()
-                self.connect_neighbours()
+            if self.data_streamer.is_land(data):
+                self._explore_position()
+                self._connect_neighbours()
 
             # for memory optimalization
             if row_to_clean + 2 == self.row:
                 lands_beyond_horizon += \
-                    self.count_lands_beyond_horizon(row_len)
+                    self._count_lands_beyond_horizon(row_len)
                 row_to_clean += 1
 
-            self.move_forward()
+            self._move_forward()
 
         return len(self.lands) + lands_beyond_horizon

@@ -227,4 +227,11 @@ You only need Python 3 to run it, but if you don't have it, the dockerfile is re
 - [x] refactoring
 - [x] descriptions
 - [x] docker file
-- [ ] make it public
+- [x] make it public
+
+
+TODO:
+- [x] matrix reader is in the input_data_parser module, whereas stream reader in streams module - this calls for class inheritance
+- [x] not using non-public function names in the PEP8 sense 
+- [x] violating SRP (Explorer class is aware of `\n` characters)
+

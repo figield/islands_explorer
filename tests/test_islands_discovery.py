@@ -4,8 +4,7 @@ from unittest import skip
 
 from arbitrary.islands_discovery_with_graph import Graph
 from utils.explorer import Explorer
-from utils.input_data_parser import read_matrix_from_file
-from utils.streams import stream_data_from_file, stream_data_from_matrix
+from utils.streams import LandDataStreamerFromFile, LandDataStreamerFromMatrix
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "test_data")
@@ -92,7 +91,8 @@ class TestIslandsDiscoveryFromFile(unittest.TestCase,
                                    CommonTestsForIslandsDiscovery):
 
     def _test_island_explorer(self, test_data_file, expected_result):
-        explorer = Explorer(test_data_file, stream_data_from_file)
+        data_streamer = LandDataStreamerFromFile(test_data_file)
+        explorer = Explorer(data_streamer)
         actual_result = explorer.count_islands()
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands,"
@@ -103,7 +103,8 @@ class TestIslandsDiscoveryFromMatrix(unittest.TestCase,
                                      CommonTestsForIslandsDiscovery):
 
     def _test_island_explorer(self, test_data_file, expected_result):
-        explorer = Explorer(test_data_file, stream_data_from_matrix)
+        data_streamer = LandDataStreamerFromMatrix(test_data_file)
+        explorer = Explorer(data_streamer)
         actual_result = explorer.count_islands()
         self.assertEqual(expected_result, actual_result,
                          f"Expected to discover {expected_result} islands,"
@@ -118,7 +119,8 @@ class TestIslandsDiscoveryByArbitrarySolution(unittest.TestCase,
     """
 
     def _test_island_explorer(self, test_data_file, expected_result):
-        array2d = read_matrix_from_file(test_data_file)
+        data_streamer = LandDataStreamerFromMatrix(test_data_file)
+        array2d = data_streamer.read_matrix_from_file()
         if not array2d:
             array2d = [[]]
         graph = Graph(len(array2d), len(array2d[0]), array2d)

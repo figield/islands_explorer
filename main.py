@@ -2,7 +2,7 @@ import sys
 
 from utils.explorer import Explorer
 from utils.input_data_parser import get_input_arguments
-from utils.streams import stream_data_from_file, stream_data_from_matrix
+from utils.streams import LandDataStreamerFromFile, LandDataStreamerFromMatrix
 
 
 def main():
@@ -12,10 +12,12 @@ def main():
 
     start = timer()
     if method == "stream":
-        explorer = Explorer(file_path, stream_data_from_file)
+        data_streamer = LandDataStreamerFromFile(file_path)
+        explorer = Explorer(data_streamer)
         result = explorer.count_islands()
     else:
-        explorer = Explorer(file_path, stream_data_from_matrix)
+        data_streamer = LandDataStreamerFromMatrix(file_path)
+        explorer = Explorer(data_streamer)
         result = explorer.count_islands()
     end = timer()
 
