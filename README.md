@@ -227,7 +227,6 @@ You only need Python 3 to run it, but if you don't have it, the dockerfile is re
 - [x] refactoring
 - [x] descriptions
 - [x] docker file
-- [x] make it public
 
 
 Post review code updates:
